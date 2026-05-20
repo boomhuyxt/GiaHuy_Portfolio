@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Gia Huy | Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100;300;400;500;600;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#ffffff",
+                        "background-dark": "#000000",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"],
+                        "sans": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .tech-rain-icon {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10;
+            font-size: 2rem;
+            animation: fall 5s linear forwards;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .dark .glass-header {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .text-outline-black {
+            -webkit-text-stroke: 1px black;
+            color: transparent;
+        }
+        .text-outline-white {
+            -webkit-text-stroke: 1px white;
+            color: transparent;
+        }
+        .split-text {
+            font-size: 25vw;
+            line-height: 1;
+            font-weight: 900;
+            user-select: none;
+            pointer-events: none;
+        }
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+        .project-image {
+            transition: transform 0.5s ease;
+        }
+        /* Desktop split hero specifics */
+        .mono-half-desktop {
+            clip-path: inset(0 0 0 50%);
+        }
+        .color-half-desktop {
+            clip-path: inset(0 50% 0 0);
+        }
+        /* Custom scrollbar for dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ec5b13;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { createRoot } = ReactDOM;
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+        // --- Shared Components ---
+
+        const Navigation = ({ transparent = false }) => {
+            const navigate = useNavigate();
+            return (
+                <header className={`fixed top-0 left-0 right-0 z-50 ${transparent ? 'bg-transparent' : 'glass-header'} border-b border-slate-900/10 dark:border-slate-100/10 px-8 py-4`}>
+                    <div className="max-w-7xl mx-auto flex items-center justify-between">
+                        <div className="flex items-center gap-2 cursor-pointer transition-all hover:scale-[1.1] duration-300 transform" onClick={() => navigate('/')}>
+                            <span className="material-symbols-outlined text-3xl font-bold text-black dark:text-white">contrast</span>
+                            <h1 className="text-xl font-black tracking-tighter">GiaHuy Developer</h1>
+                        </div>
+                        <nav className="hidden md:flex items-center gap-12 text-sm font-bold uppercase tracking-widest">
+                            <Link className="transition-all hover:scale-[1.2] duration-300 transform inline-block hover:text-inherit" to="/">Home</Link>
+                            <Link className="transition-all hover:scale-[1.2] duration-300 transform inline-block hover:text-inherit" to="/skills">Skills</Link>
+                            <Link className="transition-all hover:scale-[1.2] duration-300 transform inline-block hover:text-inherit" to="/projects">Work</Link>
+                            <Link className="transition-all hover:scale-[1.2] duration-300 transform inline-block hover:text-inherit" to="/contact">Contact</Link>
+                        </nav>
+                        <button 
+                            onClick={() => navigate('/contact')}
+                            className="bg-black dark:bg-white text-white dark:text-black px-6 py-2 text-xs font-bold uppercase tracking-widest rounded-lg transition-all hover:scale-[1.1] border border-white/20 dark:border-black/20"
+                        >
+                            Get in touch
+                        </button>
+                    </div>
+                </header>
+            );
+        };
+
+        const Footer = () => (
+            <footer className="border-t border-slate-900/10 dark:border-slate-100/10 p-8 bg-white dark:bg-black">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.5em] opacity-50">© GiaHuy Developer. ALL RIGHTS RESERVED.</p>
+                    <div className="flex gap-12">
+                        <a className="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-primary transition-colors" href="#">Privacy</a>
+                        <a className="text-[10px] font-bold uppercase tracking-[0.3em] hover:text-primary transition-colors" href="#">Terms</a>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-px bg-slate-900 dark:bg-slate-100"></div>
+                        <span className="text-[10px] font-black italic tracking-widest">NO COLOR. JUST DESIGN.</span>
+                    </div>
+                </div>
+            </footer>
+        );
+
+        // --- Screen Components ---
+
+        const HeroScreen = () => {
+            const navigate = useNavigate();
+            const [rainItems, setRainItems] = useState([]);
+            const techIcons = [
+                { icon: 'devicon-css3-plain', color: '#1572B6' },
+                { icon: 'devicon-csharp-plain', color: '#239120' },
+                { icon: 'devicon-html5-plain', color: '#E34F26' },
+                { icon: 'devicon-docker-plain', color: '#2496ED' },
+                { icon: 'devicon-github-original', color: '#181717' },
+                { icon: 'devicon-microsoftsqlserver-plain', color: '#CC2927' },
+                { icon: 'devicon-mysql-plain', color: '#4479A1' },
+                { icon: 'devicon-dotnetcore-plain', color: '#512BD4' },
+                { icon: 'devicon-javascript-plain', color: '#F7DF1E' },
+                { icon: 'devicon-java-plain', color: '#007396' },
+                { icon: 'devicon-python-plain', color: '#3776AB' },
+                { icon: 'devicon-react-original', color: '#61DAFB' },
+                { icon: 'devicon-tailwindcss-original', color: '#06B6D4' }
+            ];
+
+            useEffect(() => {
+                const triggerRain = () => {
+                    const newRain = Array.from({ length: 25 }).map((_, i) => {
+                        const tech = techIcons[Math.floor(Math.random() * techIcons.length)];
+                        return {
+                            id: Date.now() + i,
+                            icon: tech.icon,
+                            color: tech.color,
+                            left: Math.random() * 100,
+                            delay: Math.random() * 3,
+                            duration: 4 + Math.random() * 5,
+                            size: 24 + Math.random() * 30
+                        };
+                    });
+                    setRainItems(newRain);
+                    
+                    // Clear items after animation duration
+                    setTimeout(() => setRainItems([]), 8000);
+                };
+
+                const interval = setInterval(triggerRain, 10000);
+                // Trigger once at start
+                const initialTimeout = setTimeout(triggerRain, 2000);
+
+                return () => {
+                    clearInterval(interval);
+                    clearTimeout(initialTimeout);
+                };
+            }, []);
+
+            return (
+                <div className="flex flex-col relative overflow-hidden">
+                    {rainItems.map(item => (
+                        <i 
+                            key={item.id}
+                            className={`tech-rain-icon opacity-60 ${item.icon}`}
+                            style={{
+                                left: `${item.left}%`,
+                                animationDelay: `${item.delay}s`,
+                                animationDuration: `${item.duration}s`,
+                                fontSize: `${item.size}px`,
+                                color: item.color,
+                            }}
+                        />
+                    ))}
+                    <Navigation />
+                    <main className="relative h-screen w-full flex overflow-hidden">
+                        {/* Left Side: White / FE */}
+                        <div className="w-1/2 h-full bg-white flex items-center justify-center relative overflow-hidden border-r border-zinc-200">
+                            <span className="split-text text-zinc-100 absolute left-10 bottom-10">FE</span>
+                            <div className="z-10 text-left p-12 max-w-md ml-auto translate-x-[-10%]">
+                                <h2 className="text-6xl font-black text-black leading-none mb-4">FRONT<br/>END</h2>
+                                <p className="text-zinc-500 font-medium">Crafting seamless user experiences and modern interfaces with precision.</p>
+                                <button onClick={() => navigate('/skills')} className="mt-6 border-b-2 border-black text-black font-bold uppercase tracking-widest text-sm py-1 hover:border-primary hover:text-primary transition-all">Explore Skills</button>
+                            </div>
+                        </div>
+                        {/* Right Side: Black / BE */}
+                        <div className="w-1/2 h-full bg-black flex items-center justify-center relative overflow-hidden">
+                            <span className="split-text text-zinc-900 absolute right-10 top-10">BE</span>
+                            <div className="z-10 text-left p-12 max-w-md mr-auto translate-x-[30%]">
+                                <h2 className="text-6xl font-black text-white leading-none mb-4">BACK<br/>END</h2>
+                                <p className="text-zinc-400 font-medium">Architecting robust systems, databases, and high-performance server logic.</p>
+                                <button onClick={() => navigate('/projects')} className="mt-6 border-b-2 border-white text-white font-bold uppercase tracking-widest text-sm py-1 hover:border-primary hover:text-primary transition-all">View Projects</button>
+                            </div>
+                        </div>
+
+                        {/* Centered Avatar Image (Removed background/container styles as per request) */}
+                        <div className="absolute inset-0 flex justify-center items-end pointer-events-none z-20">
+                            <div className="relative w-[1080px] h-full flex items-end justify-center">
+                                <div className="relative w-full h-[85.5%]">
+                                    <div 
+                                        className="absolute inset-0 bg-center bg-contain bg-no-repeat bg-bottom z-10 mono-half-desktop" 
+                                        style={{backgroundImage: "url('8.png')", filter: "grayscale(100%)"}}
+                                    ></div>
+                                    <div 
+                                        className="absolute inset-0 bg-center bg-contain bg-no-repeat bg-bottom z-10 color-half-desktop" 
+                                        style={{backgroundImage: "url('8.png')"}}
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
+        const SkillsScreen = () => {
+            return (
+                <div className="flex flex-col min-h-screen bg-black">
+                    <Navigation />
+                    <main className="flex-grow pt-20">
+                        <section className="flex flex-col lg:flex-row h-auto lg:h-[calc(100vh-80px)] w-full bg-black">
+                            {/* Left Side: Frontend */}
+                            <section className="relative w-full lg:w-1/2 bg-white flex flex-col justify-center px-12 lg:px-20 py-20 lg:py-0 overflow-hidden border-b lg:border-b-0 lg:border-r border-black">
+                                <div className="absolute -left-10 top-1/2 -translate-y-1/2 select-none pointer-events-none hidden lg:block">
+                                    <h1 className="text-[25rem] font-black leading-none text-outline-black opacity-5">FE</h1>
+                                </div>
+                                <div className="relative z-10 space-y-12">
+                                    <div className="space-y-4">
+                                        <span className="text-xs font-black uppercase tracking-[0.5em] text-black">Frontend Development</span>
+                                        <h2 className="text-5xl lg:text-6xl font-black text-black leading-none">CRAFTING<br/>INTERFACES</h2>
+                                    </div>
+                                    <div className="grid grid-cols-1 gap-6 max-w-md">
+                                        {[
+                                            {icon: 'layers', color: '#00A3FF', title: 'Stitch UI', desc: 'Atomic Design Systems & Libraries'},
+                                            {icon: 'category', color: '#F24E1E', title: 'Figma', desc: 'Prototyping & Visual Design Systems'},
+                                            {icon: 'code_blocks', color: '#E34F26', title: 'HTML5 / CSS3', desc: 'Responsive Layouts & Semantics'},
+                                            {icon: 'waves', color: '#06B6D4', title: 'Tailwind CSS', desc: 'Utility-first styling & Prototyping'}
+                                        ].map((skill, idx) => (
+                                            <div key={idx} className="group border-b border-black pb-4 flex justify-between items-end">
+                                                <div className="flex items-start gap-4">
+                                                    <span className="material-symbols-outlined text-3xl" style={{color: skill.color, fontVariationSettings: "'FILL' 1"}}>{skill.icon}</span>
+                                                    <div className="space-y-1">
+                                                        <h3 className="text-xl lg:text-2xl font-bold text-black uppercase">{skill.title}</h3>
+                                                        <p className="text-xs lg:text-sm text-black/60 font-medium">{skill.desc}</p>
+                                                    </div>
+                                                </div>
+                                                <span className="material-symbols-outlined group-hover:translate-x-2 transition-transform" style={{color: skill.color}}>arrow_forward</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </section>
+
+                            {/* Right Side: Backend */}
+                            <section className="relative w-full lg:w-1/2 bg-black flex flex-col justify-center px-12 lg:px-20 py-20 lg:py-0 overflow-hidden">
+                                <div className="absolute -right-10 top-1/2 -translate-y-1/2 select-none pointer-events-none hidden lg:block">
+                                    <h1 className="text-[25rem] font-black leading-none text-outline-white opacity-10">BE</h1>
+                                </div>
+                                <div className="relative z-10 space-y-12">
+                                    <div className="space-y-4">
+                                        <span className="text-xs font-black uppercase tracking-[0.5em] text-white/50">Backend Architecture</span>
+                                        <h2 className="text-5xl lg:text-6xl font-black text-white leading-none">BUILDING<br/>SYSTEMS</h2>
+                                    </div>
+                                    <div className="grid grid-cols-1 gap-6 max-w-md">
+                                        {[
+                                            {icon: 'settings_ethernet', title: '.NET Core', desc: 'Robust Enterprise API Development', num: '01'},
+                                            {icon: 'database', title: 'SQL / MySQL', desc: 'Relational Data Modeling & Optimization', num: '02'},
+                                            {icon: 'package_2', title: 'Docker', desc: 'Containerization & Microservices', num: '03'},
+                                            {icon: 'psychology', title: 'AI Gemini', desc: 'LLM Integration & Prompt Engineering', num: '04'}
+                                        ].map((skill, idx) => (
+                                            <div key={idx} className="group border-b border-white/20 pb-4 flex justify-between items-end">
+                                                <div className="flex items-start gap-4">
+                                                    <span className="material-symbols-outlined text-white text-3xl">{skill.icon}</span>
+                                                    <div className="space-y-1">
+                                                        <h3 className="text-lg lg:text-xl font-bold text-white uppercase">{skill.title}</h3>
+                                                        <p className="text-xs lg:text-sm text-white/50 font-medium">{skill.desc}</p>
+                                                    </div>
+                                                </div>
+                                                <span className="text-white text-xs font-mono">{skill.num}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </section>
+                        </section>
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
+        const ProjectsScreen = () => {
+            const projects = [
+                {
+                    title: "Nexus Dashboard",
+                    tags: "REACT / TAILWIND / GSAP",
+                    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDrsbw4WzD5MW27_vlaVCpkBiSl0OdC3hg9Akn8zK3l0O11eDTel-9CVLdmytKgqDz05bGQXhfsX_BbD4k8cIKhO6ZI8oTOvlrktxMXnOuohErnbcfxZjXcPv0X1WNVNtGphGeXTbl2OeZuW6yZ1nnzEgFB298yqX9jZUR8pvZX5MeS-dKQXSca7OZYdhMBZ5wTZ9zGk-tqM9HTV85UpsbnBa58MQLQU8azDQLj6F1VxEnT-HoE5SFWGqqLs61lcd7TGJqs3N0iq6U"
+                },
+                {
+                    title: "Kernel Core V2",
+                    tags: "RUST / DOCKER / KUBERNETES",
+                    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDYeUi9qVK8Pwl-E1WW7mUg7J-jtCVUnluEgL2i7CneuE52b4eNoxaXELlNaJybybmbHNdlsqnoYwiiK7oBulCKy1s5l_aUKYfOTR4qS3nqfosa0RPCa1mKztbNexJHFzwe9HLbFbQ1pnDAv_Cpsw2zgicN--KDeoKkBIdCkMyEcq5gGHVYp0BFmw8Qb5jVb0c9McK7raCVOoV6bICZXVSjQrJ1r-TIKjAr71SYoI8SYDF7kzIXHA9wRBqYGW5FsCkbKzOMO4IfVNI"
+                },
+                {
+                    title: "Stream Engine",
+                    tags: "GO / REDIS / WEBSOCKETS",
+                    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCcDKRi1Lf2Y9Q0v-B9hko5vGqoKyP8aF_F5-N-TI2oM5EeELLW51hEvicUjMrPtu8XA5yTB8fv1KnpkJIVLqWdFdNhYWR7tmHUZCg3u1KmGbGH1c4_AlxzuGoy52Fktl-Tg_QtdTUPnwgmrN1qc7_HhwLGgJQp8gejwA-4Bnkcw8egliV4NHWuqZ3YELXt-nUYOyhp1pEqgtckkF6q6anADcwZ3tMzfy-5nOV9QsDVj2LqMOAY2wsM5Bt8sUGmipCqgTq5KW0FQxw"
+                }
+            ];
+
+            return (
+                <div className="flex flex-col min-h-screen">
+                    <Navigation />
+                    <main className="min-h-screen pt-40 pb-32">
+                        <div className="max-w-7xl mx-auto px-6">
+                            <div className="flex flex-col lg:flex-row justify-between lg:items-end mb-16 gap-8">
+                                <h3 className="text-7xl lg:text-8xl font-black tracking-tighter">PROJECTS</h3>
+                                <p className="text-black dark:text-white font-bold uppercase tracking-widest pb-4">Selected Works 2024</p>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                                {projects.map((project, idx) => (
+                                    <div key={idx} className="project-card group cursor-pointer">
+                                        <div className="overflow-hidden aspect-[4/3] bg-black/5 dark:bg-white/5 mb-6 rounded-lg">
+                                            <div 
+                                                className="w-full h-full bg-cover bg-center project-image" 
+                                                style={{backgroundImage: `url('${project.image}')`}}
+                                            ></div>
+                                        </div>
+                                        <div className="flex justify-between items-start">
+                                            <div>
+                                                <h3 className="text-2xl font-bold uppercase dark:text-white group-hover:text-primary transition-colors">{project.title}</h3>
+                                                <p className="text-xs font-bold tracking-widest opacity-60 mt-1 dark:text-white/60">{project.tags}</p>
+                                            </div>
+                                            <span className="material-symbols-outlined group-hover:translate-x-2 transition-transform group-hover:text-primary dark:text-white">arrow_forward</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
+        const ContactScreen = () => {
+            return (
+                <div className="flex flex-col min-h-screen">
+                    <Navigation />
+                    <main className="min-h-screen pt-20 flex flex-col md:flex-row">
+                        <section className="w-full md:w-1/2 min-h-[50vh] md:min-h-screen flex flex-col justify-center p-8 md:p-24 border-b md:border-b-0 md:border-r border-slate-900/10 dark:border-slate-100/10 bg-white dark:bg-black">
+                            <div className="max-w-md">
+                                <span className="text-xs font-bold uppercase tracking-[0.3em] mb-4 block text-black dark:text-white">Connections</span>
+                                <h2 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-none italic dark:text-white">LET'S<br/>TALK.</h2>
+                                <p className="text-lg font-light leading-relaxed mb-12 opacity-70 dark:text-zinc-300">
+                                    Exploring the boundaries of minimalism and high-contrast digital experiences. Reach out for collaborations or just to say hello.
+                                </p>
+                                <div className="grid grid-cols-1 gap-8">
+                                    <div className="group flex items-center gap-6 p-4 border border-black dark:border-white rounded-lg transition-all cursor-pointer bg-white dark:bg-black">
+                                        <span className="material-symbols-outlined text-4xl text-black dark:text-white">alternate_email</span>
+                                        <div>
+                                            <p className="text-xs font-bold uppercase tracking-widest opacity-50 dark:text-white">Email</p>
+                                            <p className="text-xl font-bold tracking-tight dark:text-white">boomhuyxt@gmail.com</p>
+                                        </div>
+                                    </div>
+                                    <div className="group flex items-center gap-6 p-4 border border-black dark:border-white rounded-lg transition-all cursor-pointer bg-white dark:bg-black">
+                                        <span className="material-symbols-outlined text-4xl text-black dark:text-white">terminal</span>
+                                        <div>
+                                            <p className="text-xs font-bold uppercase tracking-widest opacity-50 dark:text-white">GitHub</p>
+                                            <p className="text-xl font-bold tracking-tight dark:text-white">@boomhuyxt</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section className="w-full md:w-1/2 min-h-[50vh] md:min-h-screen flex flex-col justify-center p-8 md:p-24 bg-white">
+                            <div className="max-w-md">
+                                <div className="space-y-12">
+                                    <div className="group cursor-pointer">
+                                        <div className="flex items-center justify-between border-b border-black pb-4 group-hover:pl-4 transition-all">
+                                            <div className="flex items-center gap-4">
+                                                <span className="material-symbols-outlined text-3xl text-black">work</span>
+                                                <span className="text-2xl font-bold tracking-tighter uppercase text-black">LinkedIn</span>
+                                            </div>
+                                            <span className="material-symbols-outlined transform group-hover:rotate-45 transition-transform text-black">arrow_outward</span>
+                                        </div>
+                                        <p className="text-sm font-medium mt-2 opacity-50 text-zinc-600">/in/monodesign</p>
+                                    </div>
+                                    <div className="group cursor-pointer">
+                                        <div className="flex items-center justify-between border-b border-black pb-4 group-hover:pl-4 transition-all">
+                                            <div className="flex items-center gap-4">
+                                                <span className="material-symbols-outlined text-3xl text-black">public</span>
+                                                <span className="text-2xl font-bold tracking-tighter uppercase text-black">FaceBook</span>
+                                            </div>
+                                            <span className="material-symbols-outlined transform group-hover:rotate-45 transition-transform text-black">arrow_outward</span>
+                                        </div>
+                                        <p className="text-sm font-medium mt-2 opacity-50 text-zinc-600">@Huy hu</p>
+                                    </div>
+                                    <div className="pt-12 grid grid-cols-2 gap-8">
+                                        <div>
+                                            <h4 className="text-xs font-black uppercase tracking-[0.2em] mb-2 text-black">Office</h4>
+                                            <p className="text-sm leading-relaxed opacity-70 italic text-zinc-800">101 Void Street,<br/>Lower Manhattan, NY</p>
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xs font-black uppercase tracking-[0.2em] mb-2 text-black">Hours</h4>
+                                            <p className="text-sm leading-relaxed opacity-70 italic text-zinc-800">00:00 — 24:00<br/>Always Open</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
+        // --- App Shell ---
+
+        const App = () => {
+            const { pathname } = useLocation();
+
+            useEffect(() => {
+                window.scrollTo(0, 0);
+            }, [pathname]);
+
+            return (
+                <div className="min-h-screen">
+                    <Routes>
+                        <Route path="/" element={<HeroScreen />} />
+                        <Route path="/skills" element={<SkillsScreen />} />
+                        <Route path="/projects" element={<ProjectsScreen />} />
+                        <Route path="/contact" element={<ContactScreen />} />
+                    </Routes>
+                </div>
+            );
+        };
+
+        const container = document.getElementById('root');
+        const root = createRoot(container);
+        root.render(
+            <MemoryRouter>
+                <App />
+            </MemoryRouter>
+        );
+    </script>
+</body>
+</html>
