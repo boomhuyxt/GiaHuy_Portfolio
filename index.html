@@ -261,11 +261,11 @@
                                 <div className="relative w-full h-[85.5%]">
                                     <div 
                                         className="absolute inset-0 bg-center bg-contain bg-no-repeat bg-bottom z-10 mono-half-desktop" 
-                                        style={{backgroundImage: "url('8.png')", filter: "grayscale(100%)"}}
+                                        style={{backgroundImage: "url('images/8.png')", filter: "grayscale(100%)"}}
                                     ></div>
                                     <div 
                                         className="absolute inset-0 bg-center bg-contain bg-no-repeat bg-bottom z-10 color-half-desktop" 
-                                        style={{backgroundImage: "url('8.png')"}}
+                                        style={{backgroundImage: "url('images/8.png')"}}
                                     ></div>
                                 </div>
                             </div>
@@ -362,8 +362,8 @@
         },
         {
             href: "https://github.com/boomhuyxt/ql_nhanSW.git", 
-            title: "Kernel Core V2",
-            tags: "RUST / DOCKER / KUBERNETES",
+            title: "HUMAN RESOURCES MANAGEMENT AI",
+            tags: "C# / XAML / SQLserver",
             image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDYeUi9qVK8Pwl-E1WW7mUg7J-jtCVUnluEgL2i7CneuE52b4eNoxaXELlNaJybybmbHNdlsqnoYwiiK7oBulCKy1s5l_aUKYfOTR4qS3nqfosa0RPCa1mKztbNexJHFzwe9HLbFbQ1pnDAv_Cpsw2zgicN--KDeoKkBIdCkMyEcq5gGHVYp0BFmw8Qb5jVb0c9McK7raCVOoV6bICZXVSjQrJ1r-TIKjAr71SYoI8SYDF7kzIXHA9wRBqYGW5FsCkbKzOMO4IfVNI"
         },
         {
@@ -385,7 +385,11 @@
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                                 {projects.map((project, idx) => (
-                                    <div key={idx} className="project-card group cursor-pointer">
+                                    <div 
+                                        key={idx} 
+                                        className="project-card group cursor-pointer"
+                                        onClick={() => window.open(project.href, '_blank')}
+                                    >
                                         <div className="overflow-hidden aspect-[4/3] bg-black/5 dark:bg-white/5 mb-6 rounded-lg">
                                             <div 
                                                 className="w-full h-full bg-cover bg-center project-image" 
@@ -409,77 +413,95 @@
             );
         };
 
-        const ContactScreen = () => {
-            return (
-                <div className="flex flex-col min-h-screen">
-                    <Navigation />
-                    <main className="min-h-screen pt-20 flex flex-col md:flex-row">
-                        <section className="w-full md:w-1/2 min-h-[50vh] md:min-h-screen flex flex-col justify-center p-8 md:p-24 border-b md:border-b-0 md:border-r border-slate-900/10 dark:border-slate-100/10 bg-white dark:bg-black">
-                            <div className="max-w-md">
-                                <span className="text-xs font-bold uppercase tracking-[0.3em] mb-4 block text-black dark:text-white">Connections</span>
-                                <h2 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-none italic dark:text-white">LET'S<br/>TALK.</h2>
-                                <p className="text-lg font-light leading-relaxed mb-12 opacity-70 dark:text-zinc-300">
-                                    Exploring the boundaries of minimalism and high-contrast digital experiences. Reach out for collaborations or just to say hello.
-                                </p>
-                                <div className="grid grid-cols-1 gap-8">
-                                    <div className="group flex items-center gap-6 p-4 border border-black dark:border-white rounded-lg transition-all cursor-pointer bg-white dark:bg-black">
-                                        <span className="material-symbols-outlined text-4xl text-black dark:text-white">alternate_email</span>
-                                        <div>
-                                            <p className="text-xs font-bold uppercase tracking-widest opacity-50 dark:text-white">Email</p>
-                                            <p className="text-xl font-bold tracking-tight dark:text-white">boomhuyxt@gmail.com</p>
-                                        </div>
+const ContactScreen = () => {
+    return (
+        <div className="flex flex-col min-h-screen">
+            <Navigation />
+            <main className="min-h-screen pt-20 flex flex-col md:flex-row">
+                <section className="w-full md:w-1/2 min-h-[50vh] md:min-h-screen flex flex-col justify-center p-8 md:p-24 border-b md:border-b-0 md:border-r border-slate-900/10 dark:border-slate-100/10 bg-white dark:bg-black">
+                    <div className="max-w-md">
+                        <span className="text-xs font-bold uppercase tracking-[0.3em] mb-4 block text-black dark:text-white">Connections</span>
+                        <h2 className="text-5xl md:text-8xl font-black tracking-tighter mb-8 leading-none italic dark:text-white">LET'S<br />TALK.</h2>
+                        <p className="text-lg font-light leading-relaxed mb-12 opacity-70 dark:text-zinc-300">
+                            Exploring the boundaries of minimalism and high-contrast digital experiences. Reach out for collaborations or just to say hello.
+                        </p>
+                        <div className="grid grid-cols-1 gap-8">
+                            <a 
+                               
+                                className="group flex items-center gap-6 p-4 border border-black dark:border-white rounded-lg transition-all cursor-pointer bg-white dark:bg-black hover:bg-zinc-50 dark:hover:bg-zinc-900 no-underline"
+                            >
+                                <span className="material-symbols-outlined text-4xl text-black dark:text-white">alternate_email</span>
+                                <div>
+                                    <p className="text-xs font-bold uppercase tracking-widest opacity-50 dark:text-white">Email</p>
+                                    <p className="text-xl font-bold tracking-tight dark:text-white">boomhuyxt@gmail.com</p>
+                                </div>
+                            </a>
+                            <a 
+                                href="https://github.com/boomhuyxt" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="group flex items-center gap-6 p-4 border border-black dark:border-white rounded-lg transition-all cursor-pointer bg-white dark:bg-black hover:bg-zinc-50 dark:hover:bg-zinc-900 no-underline"
+                            >
+                                <span className="material-symbols-outlined text-4xl text-black dark:text-white">terminal</span>
+                                <div>
+                                    <p className="text-xs font-bold uppercase tracking-widest opacity-50 dark:text-white">GitHub</p>
+                                    <p className="text-xl font-bold tracking-tight dark:text-white">@boomhuyxt</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+                <section className="w-full md:w-1/2 min-h-[50vh] md:min-h-screen flex flex-col justify-center p-8 md:p-24 bg-white">
+                    <div className="max-w-md">
+                        <div className="space-y-12">
+                            <a 
+                                href="https://www.linkedin.com/in/monodesign" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="group block no-underline"
+                            >
+                                <div className="flex items-center justify-between border-b border-black pb-4 group-hover:pl-4 transition-all">
+                                    <div className="flex items-center gap-4">
+                                        <span className="material-symbols-outlined text-3xl text-black">work</span>
+                                        <span className="text-2xl font-bold tracking-tighter uppercase text-black">LinkedIn</span>
                                     </div>
-                                    <div className="group flex items-center gap-6 p-4 border border-black dark:border-white rounded-lg transition-all cursor-pointer bg-white dark:bg-black">
-                                        <span className="material-symbols-outlined text-4xl text-black dark:text-white">terminal</span>
-                                        <div>
-                                            <p className="text-xs font-bold uppercase tracking-widest opacity-50 dark:text-white">GitHub</p>
-                                            <p className="text-xl font-bold tracking-tight dark:text-white">@boomhuyxt</p>
-                                        </div>
+                                    <span className="material-symbols-outlined transform group-hover:rotate-45 transition-transform text-black">arrow_outward</span>
+                                </div>
+                                <p className="text-sm font-medium mt-2 opacity-50 text-zinc-600">/in/monodesign</p>
+                            </a>
+                            <a 
+                                href="https://www.facebook.com/huy.hu.506867" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="group block no-underline"
+                            >
+                                <div className="flex items-center justify-between border-b border-black pb-4 group-hover:pl-4 transition-all">
+                                    <div className="flex items-center gap-4">
+                                        <span className="material-symbols-outlined text-3xl text-black">public</span>
+                                        <span className="text-2xl font-bold tracking-tighter uppercase text-black">FaceBook</span>
                                     </div>
+                                    <span className="material-symbols-outlined transform group-hover:rotate-45 transition-transform text-black">arrow_outward</span>
+                                </div>
+                                <p className="text-sm font-medium mt-2 opacity-50 text-zinc-600">@Huy hu</p>
+                            </a>
+                            <div className="pt-12 grid grid-cols-2 gap-8">
+                                <div>
+                                    <h4 className="text-xs font-black uppercase tracking-[0.2em] mb-2 text-black">Office</h4>
+                                    <p className="text-sm leading-relaxed opacity-70 italic text-zinc-800">101 Void Street,<br />THUC DUC, HCM CITY</p>
+                                </div>
+                                <div>
+                                    <h4 className="text-xs font-black uppercase tracking-[0.2em] mb-2 text-black">Hours</h4>
+                                    <p className="text-sm leading-relaxed opacity-70 italic text-zinc-800">00:00 — 24:00<br />Always Open</p>
                                 </div>
                             </div>
-                        </section>
-                        <section className="w-full md:w-1/2 min-h-[50vh] md:min-h-screen flex flex-col justify-center p-8 md:p-24 bg-white">
-                            <div className="max-w-md">
-                                <div className="space-y-12">
-                                    <div className="group cursor-pointer">
-                                        <div className="flex items-center justify-between border-b border-black pb-4 group-hover:pl-4 transition-all">
-                                            <div className="flex items-center gap-4">
-                                                <span className="material-symbols-outlined text-3xl text-black">work</span>
-                                                <span className="text-2xl font-bold tracking-tighter uppercase text-black">LinkedIn</span>
-                                            </div>
-                                            <span className="material-symbols-outlined transform group-hover:rotate-45 transition-transform text-black">arrow_outward</span>
-                                        </div>
-                                        <p className="text-sm font-medium mt-2 opacity-50 text-zinc-600">/in/monodesign</p>
-                                    </div>
-                                    <div className="group cursor-pointer">
-                                        <div className="flex items-center justify-between border-b border-black pb-4 group-hover:pl-4 transition-all">
-                                            <div className="flex items-center gap-4">
-                                                <span className="material-symbols-outlined text-3xl text-black">public</span>
-                                                <span className="text-2xl font-bold tracking-tighter uppercase text-black">FaceBook</span>
-                                            </div>
-                                            <span className="material-symbols-outlined transform group-hover:rotate-45 transition-transform text-black">arrow_outward</span>
-                                        </div>
-                                        <p className="text-sm font-medium mt-2 opacity-50 text-zinc-600">@Huy hu</p>
-                                    </div>
-                                    <div className="pt-12 grid grid-cols-2 gap-8">
-                                        <div>
-                                            <h4 className="text-xs font-black uppercase tracking-[0.2em] mb-2 text-black">Office</h4>
-                                            <p className="text-sm leading-relaxed opacity-70 italic text-zinc-800">101 Void Street,<br/>Lower Manhattan, NY</p>
-                                        </div>
-                                        <div>
-                                            <h4 className="text-xs font-black uppercase tracking-[0.2em] mb-2 text-black">Hours</h4>
-                                            <p className="text-sm leading-relaxed opacity-70 italic text-zinc-800">00:00 — 24:00<br/>Always Open</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </main>
-                    <Footer />
-                </div>
-            );
-        };
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <Footer />
+        </div>
+    );
+};
 
         // --- App Shell ---
 
